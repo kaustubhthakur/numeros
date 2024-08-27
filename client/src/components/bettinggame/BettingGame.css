@@ -1,0 +1,79 @@
+/* BettingGame.css */
+
+.betting-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    max-width: 500px; /* Optional: restrict the maximum width */
+    margin: auto;
+}
+
+.section-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.place-bet-section, .spin-wheel-section {
+    width: 100%;
+    text-align: center;
+}
+
+.bet-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.bet-button, .spin-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bet-button:hover, .spin-button:hover {
+    background-color: #0056b3;
+}
+
+.result-message {
+    font-size: 18px;
+    color: #ff0000;
+    margin-top: 20px;
+}
+
+.user-details-title {
+    font-size: 20px;
+    color: #333;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.user-details {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.user-details p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
