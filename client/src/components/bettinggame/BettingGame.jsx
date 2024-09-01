@@ -254,6 +254,7 @@ const BettingGame = () => {
         id: null,
         iswinner: null,
     });
+    const [spinning, setSpinning] = useState(false);
 
     useEffect(() => {
         const connectToBlockchain = async () => {
@@ -301,6 +302,7 @@ const BettingGame = () => {
                 await tx.wait();
                 alert('Bet placed successfully!');
                 setBetPlaced(true);
+                setSpinning(true); // Start spinning animation
                 const player = await contract.players(userAddress);
                 setUserBalance(ethers.utils.formatEther(player.deposit));
 
@@ -312,6 +314,9 @@ const BettingGame = () => {
                     id: details[2].toString(),
                     iswinner: details[3],
                 });
+
+                // Stop spinning animation after 2 seconds
+                setTimeout(() => setSpinning(false), 2000);
 
             } catch (error) {
                 console.error("Error placing bet:", error);
@@ -346,43 +351,44 @@ const BettingGame = () => {
     };
 
     return (
-        <div className="betting-game-container">
-        {!betPlaced ? (
-            <div className="place-bet-section">
-                <h2 className="section-title">Place a Bet</h2>
-                <input 
-                    className="bet-input" 
-                    type="text" 
-                    placeholder="Bet Amount (ETH)" 
-                    value={betAmount} 
-                    onChange={(e) => setBetAmount(e.target.value)} 
-                />
-                <button className="bet-button" onClick={handlePlaceBet}>Place Bet</button>
-            </div>
-        ) : (
-            <div className="spin-wheel-section">
-                <h2 className="section-title">Spin the Wheel</h2>
-                <input 
-                    className="bet-input" 
-                    type="text" 
-                    placeholder="Choose a number (1-10)" 
-                    value={betNumber} 
-                    onChange={(e) => setBetNumber(e.target.value)} 
-                />
-                <button className="spin-button" onClick={handleSpin}>Spin</button>
-            </div>
-        )}
+        <div className={`betting-game-container ${spinning ? 'show-wheel' : ''}`}>
+            {!betPlaced ? (
+                <div className="place-bet-section">
+                    <h2 className="section-title">Place a Bet</h2>
+                    <input 
+                        className="bet-input" 
+                        type="text" 
+                        placeholder="Bet Amount (ETH)" 
+                        value={betAmount} 
+                        onChange={(e) => setBetAmount(e.target.value)} 
+                    />
+                    <button className="bet-button" onClick={handlePlaceBet}>Place Bet</button>
+                </div>
+            ) : (
+                <div className="spin-wheel-section">
+                    <h2 className="section-title">Spin the Wheel</h2>
+                    <input 
+                        className="bet-input" 
+                        type="text" 
+                        placeholder="Choose a number (1-10)" 
+                        value={betNumber} 
+                        onChange={(e) => setBetNumber(e.target.value)} 
+                    />
+                    <button className="spin-button" onClick={handleSpin}>Spin</button>
+                    <div className="wheel"></div> {/* Spinning wheel */}
+                </div>
+            )}
 
-        {result && <p className="result-message">{result}</p>}
+            {result && <p className="result-message">{result}</p>}
 
-        <h2 className="user-details-title">User Details</h2>
-        <div className="user-details">
-            <p>Deposit: {userDetails.deposit} ETH</p>
-            <p>Bet Placed: {userDetails.betplaced} ETH</p>
-            <p>User ID: {userDetails.id}</p>
-            <p>Winner: {userDetails.iswinner ? 'Yes' : 'No'}</p>
+            <h2 className="user-details-title">User Details</h2>
+            <div className="user-details">
+                <p>Deposit: {userDetails.deposit} ETH</p>
+                <p>Bet Placed: {userDetails.betplaced} ETH</p>
+                <p>User ID: {userDetails.id}</p>
+                <p>Winner: {userDetails.iswinner ? 'Yes' : 'No'}</p>
+            </div>
         </div>
-    </div>
     );
 };
 
